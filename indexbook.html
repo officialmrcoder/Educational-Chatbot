@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Educational Books Collection</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      margin: 0;
+      padding: 2rem;
+      color: #f9fafb;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .main-title {
+      text-align: center;
+      color: #3182ce;
+      margin-bottom: 2rem;
+    }
+
+    .toggle-button {
+      display: block;
+      margin: 0 auto 2rem auto;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background-color: #3182ce;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-button:hover {
+      background-color: #225a94;
+    }
+
+    .mood-category {
+      margin-bottom: 3rem;
+    }
+
+    .mood-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border-bottom: 3px solid #3182ce;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-card {
+      background-color: #1f2937;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+      padding: 1rem;
+      text-decoration: none;
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .book-card:hover {
+      background-color: #698192;
+      transform: translateY(-5px);
+    }
+
+    .book-card img {
+      width: 120px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .book-card h3 {
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0.5rem 0 0.25rem;
+      text-align: center;
+    }
+
+    .book-card p {
+      font-size: 0.85rem;
+      color: #ccc;
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Light Mode */
+    body:not(.dark) {
+      background-color: #f1f5f9;
+      color: #1a202c;
+    }
+
+    body:not(.dark) .book-card {
+      background-color: #fff;
+      color: #1a202c;
+    }
+
+    body:not(.dark) .book-card:hover {
+      background-color: #cbd5e0;
+    }
+
+    @media (max-width: 600px) {
+      .book-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 class="main-title">Educational Books Collection</h1>
+
+  <!-- Toggle Button -->
+  <button id="toggle-theme" class="toggle-button">Toggle Light Mode</button>
+
+  <!-- FSC / MATRIC -->
+  <section class="mood-category">
+    <h2 class="mood-title">FSC / MATRIC</h2>
+    <div class="book-grid">
+     <a href="https://www.taleem360.com/11th-class-physics-text-book-in-pdf-by-punjab-board-h5g" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNuqnqBzUV7QGyJv4r3smSxXSTQExudyTLag&s" alt="FSc 1st year Physics">
+        <h3>FSc 1st year Physics</h3>
+      </a>
+      <a href="https://www.taleem360.com/11th-class-chemistry-text-book-in-pdf-by-punjab-board-d17" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtB0hNcSoQl41a7Bn9EcwcghB1XgeL3tmqdw&s" alt="FSc 1st year Chemistry">
+        <h3>FSc 1st year Chemistry</h3>
+      </a>
+      <a href="https://www.taleem360.com/11th-class-biology-text-book-in-pdf-by-punjab-board-gis" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRigu2IW0sfS3mEJSaI36zDPGkawMYEVL3NPA&s" alt="FSc 1st year Biology">
+        <h3>FSc 1st year Biology</h3>
+      </a>
+      <a href="https://www.taleem360.com/11th-class-mathematics-text-book-in-pdf-by-pctb-pxt" target="_blank" class="book-card">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgd80JARu7iSPJURutiAF8LrLBc8HknSRLlCA4jdiBwjcAM4tlxTSpbbMev7Rs9cKh4tBtOwcNvL1DhGmDQLCWtslnDxxhD1WU0IEC0WApZMBWDveRXhKyBLH0zy-GSzJSg3i7N5kF-92Mo/s640/1st-Year-Math-Chapter-Wise-Notes-Download-Punjab-Federal-Boards.png" alt="FSc 1st year Math">
+        <h3>FSc 1st year Math</h3>
+      </a>
+    </div>
+  </section>
+
+  <!-- Computer Science -->
+  <section class="mood-category">
+    <h2 class="mood-title">Computer Science</h2>
+    <div class="book-grid">
+      <a href="https://deitel.com/c-plus-plus-how-to-program-10-e/" target="_blank" class="book-card">
+        <img src="https://images.booksense.com/images/897/502/9781952502897.jpg" alt="C++ How to Program">
+        <h3>C++ How to Program</h3>
+        <p>Paul & Harvey Deitel</p>
+      </a>
+      <a href="https://chenweixiang.github.io/docs/The_C++_Programming_Language_4th_Edition_Bjarne_Stroustrup.pdf" target="_blank" class="book-card">
+        <img src="https://rukminim2.flixcart.com/image/750/900/kjiwfbk0-0/book/o/v/z/the-c-programming-language-original-imafz2ymhbwjjght.jpeg?q=90&crop=false" alt="The C++ Programming Language">
+        <h3>The C++ Programming Language</h3>
+        <p>Bjarne Stroustrup</p>
+      </a>
+      <a href="https://www.uoitc.edu.iq/images/documents/informatics-institute/Competitive_exam/DataStructures.pdf" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVAIkZw0dIyJXjME0AWCpkt6Q74_G8OBiSpg&s" alt="Data Structures">
+        <h3>Data Structures and Algorithms</h3>
+        <p>Mark Allen Weiss</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- Medical -->
+  <section class="mood-category">
+    <h2 class="mood-title">Medical HealthCare</h2>
+    <div class="book-grid">
+       <a href="https://www.amazon.com/Principles-Anatomy-Physiology-Gerard-Tortora/dp/0470565101" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHtS4IQZkepsXpapB8OltrBf31JEcMS0hGtg&s" alt="Anatomy Book">
+        <h3>Principles Of Anatomy</h3>
+        <p>Gerard J Tortora</p>
+      </a>
+      <a href="https://www.urdubazaronline.pk/medical-books/anatomy/atlas-of-human-anatomy-by-frank-h-netter.html" target="_blank" class="book-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2b6sVGEWEgr-jRSwtuhLWmG25dFaxq6BmYg&s" alt="Atlas of Human Anatomy">
+        <h3>Atlas of Human Anatomy</h3>
+        <p>Frank H. Netter</p>
+      </a>
+    </div>
+  </section>
+
+  <script>
+    // Dark mode toggle
+    const toggleThemeBtn = document.getElementById("toggle-theme");
+    toggleThemeBtn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      toggleThemeBtn.textContent = document.body.classList.contains("dark")
+        ? "Toggle Light Mode"
+        : "Toggle Dark Mode";
+    });
+  </script>
+</body>
+</html>

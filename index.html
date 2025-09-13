@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduBot - Education Chatbot</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <style>
+    :root {
+            --neon-navy: #001a4a;
+      --neon-electric: #00f7ff;
+       --neon-purple: #a855f7;
+       --neon-pink: #ff2d75;
+      --neon-cyan: #00f5d0;
+      --text-primary: #e0f7ff;
+       --text-secondary: #8a9bb8;
+            --card-bg: rgba(0, 20, 80, 0.6);
+      --header-bg: rgba(0, 10, 50, 0.9);}
+
+    *{
+      margin: 0;
+      padding: 0;
+            box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+    body {
+      background: radial-gradient(circle at center, 
+                var(--neon-navy) 0%, 
+                #00072d 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;}
+
+    header {
+      background: var(--header-bg);
+            box-shadow: 0 2px 30px rgba(0, 247, 255, 0.15);
+      position: fixed;
+      width: 100%;
+          top: 0;
+      z-index: 1000;
+          backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 247, 255, 0.1);}
+
+    .navbar {
+      display: flex;
+         justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+            max-width: 1400px;
+      margin: 0 auto;}
+
+    .logo {
+          font-size: 1.8rem;
+      font-weight: 700;
+         color: var(--neon-electric);
+      text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);}
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+            text-decoration: none;
+      color: var(--text-primary);
+        font-weight: 500;
+      transition: all 0.3s;
+           position: relative;
+      text-shadow: 0 0 8px rgba(0, 247, 255, 0.3);}
+
+    .nav-links a:hover {
+      color: var(--neon-electric);
+      text-shadow: 0 0 15px rgba(0, 247, 255, 0.7);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+         position: absolute;
+      top: 100%;
+         left: 0;
+      background: var(--card-bg);
+      min-width: 200px;
+          box-shadow: 0 10px 25px rgba(0, 247, 255, 0.2);
+      border-radius: 8px;
+           padding: 1rem 0;
+      display: none;
+      z-index: 1;
+         backdrop-filter: blur(15px);
+      border: 1px solid var(--neon-electric);}
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: neonFadeIn 0.4s;
+    }
+
+    @keyframes neonFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-content a {
+      display: block;
+         padding: 0.5rem 1.5rem;
+      color: var(--text-primary);
+         transition: all 0.3s;
+    }
+
+    .dropdown-content a:hover {
+         color: var(--neon-cyan);
+      background: rgba(0, 247, 255, 0.05);
+      transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(0, 245, 208, 0.5); }
+
+    .hero {
+      padding: 10rem 5% 6rem;
+      display: flex;
+             align-items: center;
+      justify-content: space-between;
+            position: relative;
+      min-height: 90vh;
+       background: radial-gradient(ellipse at 80% 50%, 
+                rgba(0, 120, 255, 0.15) 0%, 
+                transparent 60%); }
+
+    .hero-content {
+      max-width: 600px;
+      z-index: 2;}
+
+    .hero h1 {
+      font-size: 2rem;
+        margin-bottom: 1.5rem;
+      color: var(--text-primary);
+           text-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+      line-height: 1.2; }
+
+    .hero p {
+         font-size: 1.3rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+         margin-bottom: 2.5rem; }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(45deg, 
+                var(--neon-pink), 
+                var(--neon-purple));
+      color: white;
+       padding: 1rem 2.5rem;
+      border-radius: 50px;
+              text-decoration: none;
+      font-weight: 600;
+        font-size: 1.1rem;
+      box-shadow: 0 5px 25px rgba(168, 85, 247, 0.5);
+        transition: all 0.3s;
+      position: relative;
+       overflow: hidden;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-5px);
+      box-shadow: 0 10px 35px rgba(168, 85, 247, 0.7); }
+
+    .cta-button:active {
+      transform: translateY(0); }
+
+    .hero-image {
+      width: 450px;
+          animation: float 6s ease-in-out infinite;
+      filter: drop-shadow(0 0 100px rgba(0, 247, 255, 0.4));
+      z-index: 1;
+       
+      margin-bottom: 20px;
+             border-radius: 50%;
+      border: 3px solid var(--neon-green);
+      box-shadow: 0 0 20px var(--neon-green);
+        object-fit: cover;
+      transition: transform 0.3s;
+    }
+     
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); } }
+
+    .features {
+        padding: 5rem 5%;
+      max-width: 1200px;
+         margin: 0 auto;
+      position: relative; }
+
+    .section-title {
+         text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+         color: var(--neon-electric);
+      margin-bottom: 1rem;
+         text-shadow: 0 0 15px rgba(0, 247, 255, 0.4); }
+
+    .features-grid {
+      display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .feature-card {
+        background: var(--card-bg);
+      border-radius: 15px;
+         padding: 2.5rem;
+      box-shadow: 0 8px 30px rgba(0, 10, 80, 0.5);
+         transition: all 0.4s;
+      border: 1px solid rgba(0, 247, 255, 0.1);
+             backdrop-filter: blur(10px); }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 247, 255, 0.2);
+        border-color: rgba(0, 247, 255, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--neon-electric);
+          margin-bottom: 1.5rem;
+      text-shadow: 0 0 15px rgba(0, 247, 255, 0.5); }
+
+    .feature-card h3 {
+      margin-bottom: 1.5rem;
+      color: var(--neon-cyan);
+        font-size: 1.5rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+        font-size: 1.1rem;}
+
+    .how-it-works {
+      padding: 5rem 5%;
+      background: radial-gradient(ellipse at 50% 50%, 
+                rgba(0, 80, 255, 0.1) 0%, 
+                transparent 70%);
+      position: relative; }
+
+    .steps {
+      display: flex;
+          justify-content: center;
+      gap: 3rem;
+        flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .step {
+        flex: 1;
+      min-width: 280px;
+      text-align: center;
+         padding: 2rem;
+      position: relative;
+      background: var(--card-bg);
+        border-radius: 15px;
+      border: 1px solid rgba(0, 247, 255, 0.1);
+          backdrop-filter: blur(10px);
+      transition: all 0.4s;}
+
+    .step:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 30px rgba(0, 247, 255, 0.15);
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, 
+                var(--neon-purple), 
+                var(--neon-cyan));
+      color: var(--neon-navy);
+         border-radius: 50%;
+      display: flex;
+         align-items: center;
+      justify-content: center;
+         margin: 0 auto 1.5rem;
+      font-weight: bold;
+         font-size: 1.5rem;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    }
+
+    .step h3 {
+      margin-bottom: 1rem;
+      color: var(--neon-electric);
+    }
+
+    .step p {
+      color: var(--text-secondary);
+    }
+
+    .testimonials {
+      padding: 5rem 5%;
+        background: radial-gradient(ellipse at 30% 50%, 
+                rgba(0, 150, 255, 0.1) 0%, 
+                transparent 70%);
+    }
+
+    .testimonial-grid {
+      display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      max-width: 1200px;
+        margin: 0 auto; }
+
+    .testimonial {
+        background: var(--card-bg);
+      border-radius: 15px;
+           padding: 2.5rem;
+      box-shadow: 0 8px 30px rgba(0, 10, 80, 0.5);
+             border-left: 3px solid var(--neon-purple);
+      backdrop-filter: blur(10px);
+      transition: all 0.4s; }
+
+    .testimonial:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2);  }
+
+    .testimonial p {
+         font-style: italic;
+      margin-bottom: 1.5rem;
+          color: var(--text-primary);
+      font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--neon-cyan); }
+
+    footer {
+      background: linear-gradient(to bottom, 
+                rgba(0, 10, 50, 0.9) 0%, 
+                #00072d 100%);
+      color: white;
+          padding: 4rem 5%;
+      text-align: center;
+         border-top: 1px solid rgba(0, 247, 255, 0.1); }
+
+    .footer-links {
+      display: flex;
+         justify-content: center;
+      gap: 2.5rem;
+         margin-bottom: 2.5rem;
+      flex-wrap: wrap; }
+
+    .footer-links a {
+        color: var(--text-primary);
+      text-decoration: none;
+         transition: all 0.3s;
+      font-size: 1.1rem; }
+    .footer-links a:hover {
+      color: var(--neon-electric);
+        text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+    }
+
+    .copyright {
+        margin-top: 2rem;
+      color: var(--text-secondary);}
+    @media (max-width: 992px) {
+      .hero {
+        flex-direction: column;
+            text-align: center;
+        padding: 8rem 5% 4rem;}
+      
+      .hero-content {
+        max-width: 100%;
+        margin-bottom: 3rem; }
+      
+      .hero-image {
+        width: 350px; }
+      
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;}
+      
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      } }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;}
+      .hero p {
+        font-size: 1.1rem; }
+      .hero-image {
+        width: 280px;}
+      .feature-card, .step, .testimonial {
+        padding: 1.5rem;} }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+          <div class="logo">EduBot</div>
+      <div class="nav-links">
+        <a href="file:///C:/Users/User/Desktop/html.html/i.html#">Home</a>
+         
+        <div class="dropdown">
+         <a href="">Calculate Aggregate</a>
+         <div class="dropdown-content"> 
+        
+           <a href="uet.html">UET</a>
+           <a href="comsats(2).html">COMSATS</a>
+           <a href="KE(2).html">King Edward</a>
+           <a href="fast(2).html"> FAST</a>
+           <a href="GIKI(2).html"> GIKI</a>
+           <a href="medicalColleges(2).html"> Other Medical Colleges</a>
+           <a href="NUST(2).html"> NUST</a>
+           <a href="II(2).html">Illama Iqbal College </a>
+         </div>
+       </div>
+         <a href="indexbook.html">Books</a>
+         
+          
+         <div class="dropdown">
+        <a href="">APPLY IN</a>
+        <div class="dropdown-content">
+         <a href="https://admission.uet.edu.pk/Modules/EntryTest/Default.aspx">UET</a>
+         <a href="https://admissions.comsats.edu.pk/">COMSATS</a>
+         <a href="https://kemu.edu.pk/admissions/">King Edward</a>
+         <a href="https://aimc.edu.pk/">Illama Iqbal</a>
+         <a href="https://admissions.nu.edu.pk/admissionsub.html">FAST</a>
+         <a href="https://admissions.pu.edu.pk/admissions/">PU</a>
+         <a href="https://www.aku.edu/">Aga Khan</a>
+         <a href="https://nust.edu.pk/">NUST</a>
+         <a href="https://lums.edu.pk/">LUMS</a>
+         <a href="https://uol.edu.pk/">UOL</a>
+         <a href="https://kips.edu.pk/">KIPS</a>
+         <a href="https://giki.edu.pk/">GIKI</a>
+         <a href="https://qau.edu.pk/">Quaid-e-Azam</a>
+         <a href="https://sims.edu.pk/">SIMS</a>
+         <a href="http://itu.edu.pk/">ITU</a>
+       </div>
+     </div>
+         <div class="dropdown">
+           <a >Universities  </i></a>
+           <div class="dropdown-content">
+             <a href="https://uet.edu.pk/">UET</a>
+             <a href="https://www.comsats.edu.pk/">COMSATS</a>
+             <a href="https://kemu.edu.pk/">King Edward</a>
+             <a href="https://aimc.edu.pk/">Illama Iqbal</a>
+             <a href="https://www.nu.edu.pk/">FAST</a>
+             <a href="https://www.pu.edu.pk/">PU</a>
+             <a href="https://www.aku.edu/">Aga Khan</a>
+             <a href="https://nust.edu.pk/">NUST</a>
+             <a href="https://lums.edu.pk/">LUMS</a>
+             <a href="https://uol.edu.pk/">UOL</a>
+             <a href="https://kips.edu.pk/">KIPS</a>
+             <a href="https://giki.edu.pk/">GIKI</a>
+             <a href="https://qau.edu.pk/">Quaid-e-Azam</a>
+             <a href="https://sims.edu.pk/">SIMS</a>
+             <a href="http://itu.edu.pk/">ITU</a>
+           </div>
+         </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Smarter Answers for Smarter Students</h1>  
+         <p>Explore Pakistan's top universities, trending fields, and degree programs – instantly with AI.</p>
+      <a href="https://education-chatbot-1a3183.zapier.app" class="cta-button">Ask EduBot Now</a>
+    </div>
+    <img src="img png.png" alt="EduBot Assistant" class="hero-image">
+  </section>
+
+  <section class="features">
+    <div class="section-title">
+      <h2>Features</h2>
+    </div>
+    <div class="features-grid">
+           <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-university"></i>
+        </div>
+          <h3>University Info</h3>
+        <p>Search university details including programs, fees, and admission criteria</p>
+      </div>
+      <div class="feature-card">
+           <div class="feature-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+          <h3>Degree Guidance</h3>
+        <p>Understand available degrees and find the perfect program for your career goals</p>
+      </div>
+      <div class="feature-card">
+               <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+    <h3>Trending Fields</h3>
+        <p>See popular fields in Pakistan and emerging career opportunities</p>
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="how-it-works">
+        <div class="section-title">
+      <h2>How It Works</h2>
+    </div>
+    <div class="steps">
+                 <div class="step">
+        <div class="step-number">1</div>
+        <h3>Type your question</h3>
+        <p>Ask anything about universities, degrees, or admissions in Pakistan</p>
+      </div>
+      <div class="step">
+             <div class="step-number">2</div>
+        <h3>AI processes your query</h3>
+        <p>Our advanced AI analyzes and finds the most accurate information</p>
+      </div>
+      <div class="step">
+                         <div class="step-number">3</div>
+        <h3>Get instant results</h3>
+        <p>Receive clear, concise answers tailored to your educational needs</p>
+      </div> </div>
+  </section>
+
+  <section class="testimonials">
+       <div class="section-title">
+      <h2>What Students Say</h2>
+    </div>
+    <div class="testimonial-grid">
+         <div class="testimonial">
+        <p>"EduBot helped me choose my degree at UET Lahore! It gave me all the information I needed in seconds."</p>
+        <div class="testimonial-author">- Komais, FAISALABAD</div>
+ </div>
+      <div class="testimonial">
+        <p>"I got all the university info without scrolling through multiple websites. Saved me so much time!"</p>
+        <div class="testimonial-author">- Muhammad Waseen, Pakistan</div> </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-links">
+      <a href="#">Resources</a>
+      <a href="#">About</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">FAQs</a></div>
+    <div class="copyright">
+      <p>Powered by | Quad Coders © 2025 EduBot. All rights reserved.</p> </div>
+  </footer>
+</body>
+</html>

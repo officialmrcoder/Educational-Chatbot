@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Aggregate Calculator for NUST</title>
+  <style>
+    :root {
+      --primary: #00ff88;
+      --secondary: #00b7ff;
+      --dark: #0a0a0a;
+      --light: #f0f0f0;
+      --glass: rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: var(--light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+ header {
+      background: var(--header-bg);
+            box-shadow: 0 2px 30px rgba(0, 247, 255, 0.15);
+      position: fixed;
+      width: 100%;
+          top: 0;
+      z-index: 1000;
+          backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 247, 255, 0.1);}
+ .navbar {
+      display: flex;
+         justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+            max-width: 1400px;
+      margin: 0 auto;}
+
+    .logo {
+          font-size: 1.8rem;
+      font-weight: 700;
+         color: var(--neon-electric);
+      text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);}
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+            text-decoration: none;
+      color: var(--text-primary);
+        font-weight: 500;
+      transition: all 0.3s;
+           position: relative;
+      text-shadow: 0 0 8px rgba(0, 247, 255, 0.3);}
+
+    .nav-links a:hover {
+      color: var(--neon-electric);
+      text-shadow: 0 0 15px rgba(0, 247, 255, 0.7);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+         position: absolute;
+      top: 100%;
+         left: 0;
+      background: var(--card-bg);
+      min-width: 200px;
+          box-shadow: 0 10px 25px rgba(0, 247, 255, 0.2);
+      border-radius: 8px;
+           padding: 1rem 0;
+      display: none;
+      z-index: 1;
+         backdrop-filter: blur(15px);
+      border: 1px solid var(--neon-electric);}
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+      animation: neonFadeIn 0.4s;
+    }
+
+    @keyframes neonFadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-content a {
+      display: block;
+         padding: 0.5rem 1.5rem;
+      color: var(--text-primary);
+         transition: all 0.3s;
+    }
+
+    .dropdown-content a:hover {
+         color: var(--neon-cyan);
+      background: rgba(0, 247, 255, 0.05);
+      transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(0, 245, 208, 0.5); }
+    
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .container {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      width: 100%;
+      max-width: 500px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(0, 255, 136, 0.1),
+        rgba(0, 183, 255, 0.1),
+        transparent
+      );
+      z-index: -1;
+      animation: rotate 15s linear infinite;
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      font-weight: 600;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border: none;
+      border-radius: 8px;
+      color: black;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #result {
+      margin-top: 30px;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+   
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+    <header>
+    <nav class="navbar">
+          <div class="logo">EduBot</div>
+      <div class="nav-links">
+        <a href="Mainpage(1).html">Home</a>
+         
+        <div class="dropdown">
+         <a href="">Calculate Aggregate</a>
+         <div class="dropdown-content"> 
+         
+           <a href=" file:///C:/Users/User/Desktop/h.html">UET</a>
+           <a href="file:///C:/Users/User/Desktop/html.html/comsats.html ">COMSATS</a>
+           <a href=" file:///C:/Users/User/Desktop/html.html/KE.html">King Edward</a>
+           <a href=" file:///C:/Users/User/Desktop/html.html/fast.html"> FAST</a>
+           <a href="file:///C:/Users/User/Desktop/html.html/GIKI.html "> GIKI</a>
+           <a href="file:///C:/Users/User/Desktop/html.html/medicalColleges.html "> Other Medical Colleges</a>
+           <a href=" file:///C:/Users/User/Desktop/html.html/NUST.html"> NUST</a>
+           <a href="file:///C:/Users/User/Desktop/html.html/II.html ">Illama Iqbal College </a>
+         </div>
+       </div>
+         <a href="">Books</a>
+         
+          
+         <div class="dropdown">
+        <a href="">APPLY IN</a>
+        <div class="dropdown-content">
+         <a href="https://admission.uet.edu.pk/Modules/EntryTest/Default.aspx">UET</a>
+         <a href="https://admissions.comsats.edu.pk/">COMSATS</a>
+         <a href="https://kemu.edu.pk/admissions/">King Edward</a>
+         <a href="https://aimc.edu.pk/">Illama Iqbal</a>
+         <a href="https://admissions.nu.edu.pk/admissionsub.html">FAST</a>
+         <a href="https://admissions.pu.edu.pk/admissions/">PU</a>
+         <a href="https://www.aku.edu/">Aga Khan</a>
+         <a href="https://nust.edu.pk/">NUST</a>
+         <a href="https://lums.edu.pk/">LUMS</a>
+         <a href="https://uol.edu.pk/">UOL</a>
+         <a href="https://kips.edu.pk/">KIPS</a>
+         <a href="https://giki.edu.pk/">GIKI</a>
+         <a href="https://qau.edu.pk/">Quaid-e-Azam</a>
+         <a href="https://sims.edu.pk/">SIMS</a>
+         <a href="http://itu.edu.pk/">ITU</a>
+       </div>
+     </div>
+         <div class="dropdown">
+           <a >Universities  </i></a>
+           <div class="dropdown-content">
+             <a href="https://uet.edu.pk/">UET</a>
+             <a href="https://www.comsats.edu.pk/">COMSATS</a>
+             <a href="https://kemu.edu.pk/">King Edward</a>
+             <a href="https://aimc.edu.pk/">Illama Iqbal</a>
+             <a href="https://www.nu.edu.pk/">FAST</a>
+             <a href="https://www.pu.edu.pk/">PU</a>
+             <a href="https://www.aku.edu/">Aga Khan</a>
+             <a href="https://nust.edu.pk/">NUST</a>
+             <a href="https://lums.edu.pk/">LUMS</a>
+             <a href="https://uol.edu.pk/">UOL</a>
+             <a href="https://kips.edu.pk/">KIPS</a>
+             <a href="https://giki.edu.pk/">GIKI</a>
+             <a href="https://qau.edu.pk/">Quaid-e-Azam</a>
+             <a href="https://sims.edu.pk/">SIMS</a>
+             <a href="http://itu.edu.pk/">ITU</a>
+           </div>
+         </div>
+      </div>
+    </nav>
+  </header>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <h2>Aggregate Calculator for NUST</h2>
+    
+    <div class="input-group">
+      <label for="matricMarks">Matric Marks</label>
+      <input id="matricMarks" type="number" placeholder="Enter marks">
+    </div>
+
+    <div class="input-group">
+      <label for="matricTotal">Matric Total</label>
+      <input id="matricTotal" type="number" value="1100">
+    </div>
+
+    <div class="input-group">
+      <label for="interMarks">Intermediate Marks</label>
+      <input id="interMarks" type="number" placeholder="Enter marks">
+    </div>
+
+    <div class="input-group">
+      <label for="interTotal">Intermediate Total</label>
+      <input id="interTotal" type="number" value="555">
+    </div>
+
+    <div class="input-group">
+      <label for="testMarks">Test Marks</label>
+      <input id="testMarks" type="number" placeholder="Enter marks">
+    </div>
+
+    <div class="input-group">
+      <label for="testTotal">Test Total</label>
+      <input id="testTotal" type="number" value="200">
+    </div>
+
+    <button onclick="calculate()">Calculate Aggregate</button>
+
+    <h3 id="result"></h3>
+  </div>
+
+  <script>
+    function calculate() {
+        const matricMarks = parseFloat(document.getElementById('matricMarks').value);
+      const matricTotal = parseFloat(document.getElementById('matricTotal').value);
+       const interMarks = parseFloat(document.getElementById('interMarks').value);
+          const interTotal = parseFloat(document.getElementById('interTotal').value);
+       const testMarks = parseFloat(document.getElementById('testMarks').value);
+      const testTotal = parseFloat(document.getElementById('testTotal').value);
+
+      const matricPercentage = (matricMarks / matricTotal) * 100;
+      const interPercentage = (interMarks / interTotal) * 100;
+      const testPercentage = (testMarks / testTotal) * 100;
+
+      const aggregate = (matricPercentage * 0.1) +
+                       (interPercentage * 0.15) +
+                       (testPercentage * 0.75);
+
+      const resultElement = document.getElementById('result');
+      resultElement.innerText = `Your aggregate is: ${aggregate.toFixed(2)}%`;
+       
+      resultElement.style.animation = 'none';
+      setTimeout(() => {
+        resultElement.style.animation = 'fadeIn 0.5s ease';
+      }, 10);
+    }
+ 
+    document.addEventListener('DOMContentLoaded', () => {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 30;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+         
+         const size = Math.random() * 5 + 1;
+        const posX = Math.random() * window.innerWidth;
+         const delay = Math.random() * 5;
+          const duration = Math.random() * 20 + 10;
+        
+           particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+        particle.style.left = `${posX}px`;
+         particle.style.bottom = `-10px`;
+        particle.style.animationDuration = `${duration}s`;
+          particle.style.animationDelay = `${delay}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    });
+  </script>
+</body>
+</html>
